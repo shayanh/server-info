@@ -5,13 +5,13 @@
 package main
 
 import (
-	"os"
-	"net"
-    "errors"
-	"fmt"
-	"net/http"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"log"
+	"net"
+	"net/http"
+	"os"
 )
 
 func externalIP() (string, error) {
@@ -53,37 +53,39 @@ func externalIP() (string, error) {
 
 // Server information ...
 type Server struct {
-    hostname string
-    ip string
+	Hostname string `json:"hostname"`
+	IP       string `json:"ip"`
 }
 
 func getServerInfo(w http.ResponseWriter, r *http.Request) {
-    hostname, err := os.Hostname()
-    if err != nil {
-        hostname = "Could not read hostname"
-    }
-    ip, err := externalIP()
-    if err != nil {
-        ip = "Could not find IP address"
-    }
+	hostname, err := os.Hostname()
+	if err != nil {
+		hostname = "Could not read hostname"
+	}
+	ip, err := externalIP()
+	if err != nil {
+		ip = "Could not find IP address"
+	}
 
-    resp := Server{
-        hostname: hostname,
-        ip: ip,
-    }
-    jsonResp, err := json.Marshal(resp)
-    if err != nil {
-        w.WriteHeader(http.StatusInternalServerError)
-        w.Write([]byte(err.Error()))
-    } else {
-        fmt.Println(string(jsonResp))
-        w.Write(jsonResp)
-    }
+	resp := Server{
+		Hostname: hostname,
+		IP:       ip,
+	}
+
+	jsonResp, err := json.Marshal(&resp)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+	} else {
+		fmt.Println(string(jsonResp))
+		w.Write(jsonResp)
+	}
 }
 
 func main() {
-    mux := http.NewServeMux()
-    mux.HandleFunc("/", getServerInfo)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", getServerInfo)
 
-    log.Fatalln(http.ListenAndServe(":80", mux))
+	log.Fatalln(http.ListenAndServe(":80", mux))
 }
