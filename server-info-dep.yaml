@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
       - name: server-info
-        image: quay.io/shayan_hosseiny/server-info
+        image: quay.io/shayan_hosseiny/server-info:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
