@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: server-info-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: server-info
+        mode: standalone
+        provider: server-info
+        app: server-info
+    spec:
+      containers:
+      - name: server-info
+        image: quay.io/shayan_hosseiny/server-info
+        ports:
+        - containerPort: 80
