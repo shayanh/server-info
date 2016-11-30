@@ -87,5 +87,5 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", getServerInfo)
 
-	log.Fatalln(http.ListenAndServe(":8080", mux))
+	log.Fatalln(http.ListenAndServe(":80", mux))
 }

@@ -4,4 +4,4 @@ ADD . /go/src/github.com/shayanh/server-info
 RUN go install github.com/shayanh/server-info
 ENTRYPOINT /go/bin/server-info
 
-EXPOSE 8080
+EXPOSE 80
