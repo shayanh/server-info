@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: server-info-ingress
+spec:
+  rules:
+  - host: ingress.shayanh.ir
+    http:
+        paths:
+        - path: /
+          backend:
+            serviceName: server-info-service
+            servicePort: 80
